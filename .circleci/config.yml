@@ -1,0 +1,81 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/ruby:2.4.1-node-browsers
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: circleci-demo-ruby
+          RAILS_ENV: test
+      - image: circleci/postgres:10-alpine-postgis
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 'password'
+          POSTGRES_DB: ride_share_test
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+    
+      # Database setup
+      - run: bundle exec rake db:schema:load --trace
+
+      # Setup Code Climate test-reporter
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
+      # Run tests
+      # run tests!
+      # - run:
+      #     name: Run tests
+      #     command: |
+      #       rake db:migrate --trace
+      #       bundle exec rspec -f d
+      #       ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.backend.json coverage/.resultset.json
+      # # collect reports
+      # - persist_to_workspace:
+      #     root: tmp
+      #     paths:
+      #       - codeclimate.backend.json
+      # - attach_workspace:
+      #     at: ~/repo/tmp
+      # Upload Coverage results to Code Climate
+      # - run:
+      #     name: Upload coverage results to Code Climate
+      #     command: |
+      #       ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 1 -o tmp/codeclimate.total.json
+      #       ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
