@@ -31,3 +31,4 @@
 
 # Ignore Environment variables
 /env
+.vscode/
