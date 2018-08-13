@@ -45,7 +45,7 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
     
       # Database setup
-      - run: bundle exec rake db:schema:load --trace
+      # - run: bundle exec rake db:schema:load --trace
 
       # Setup Code Climate test-reporter
       - run:
