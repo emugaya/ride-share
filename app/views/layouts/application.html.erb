@@ -10,6 +10,17 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class='global_nav'>
+      <div class='global-nav-inner'>
+        <div class='container'>
+          RideShare
+        </div>
+      </div>
+    </div>
+    <div id='page-outer'>
+      <div id='page-container' class='AppContent wrapper'>
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
