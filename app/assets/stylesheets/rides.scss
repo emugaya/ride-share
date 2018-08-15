@@ -1,0 +1,110 @@
+// Place all the styles related to the rides controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.ride-form {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  border: 1px solid #e6ecf0;
+  border-radius: 5px;
+  background:#f5f8fa;
+  padding: 20px;
+  margin-top: 15px;
+}
+
+.offer {
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+input {
+  width: 224px;
+  border-radius: 5px;
+  border: 1px solid #e6ecf0;
+  padding: 5px;
+  font-size: 15px;
+}
+
+.number {
+  width: 30px;
+}
+
+.rides-container {
+  position: relative;
+  margin-left: 0;
+  list-style: none;
+}
+
+.current-rides {
+  position: relative;
+  margin-left: 0;
+  list-style: none;
+}
+
+.ride-item {
+  background: #fff;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
+  background-clip: padding-box;
+  list-style: none;
+  margin-top: 5px;
+  min-height: 60px;
+  border-bottom: 1px solid pink;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.content {
+  margin-left: 58px;
+}
+
+.ride-item-avatar {
+  float: left;
+  margin-top: 3px;
+  margin-left: -58px;
+  position: absolute;
+}
+
+.ride-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.bold-font {
+  font-weight: bold;
+}
+
+ul, li {
+  top:-12px;
+  list-style-type: none;
+  list-style-position:inside;
+  margin:0;
+  padding:0;
+}
+
+.ride-item-footer {
+  display: table;
+  padding-top: 5px
+}
+
+.ride-action {
+  display: inline-block;
+  min-width: 80px;
+  margin-top: 9px;
+}
+
+.btn-action {
+  color: red;
+}
+
+.ride_page_header {
+  h2 {
+    background-color: white;
+    height: 35px;
+    padding-left: 11px;
+    padding-top: 6px;
+  }
+  
+}
