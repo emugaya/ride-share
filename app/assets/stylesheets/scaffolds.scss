@@ -1,10 +1,11 @@
 body {
-  background-color: #fff;
+  background-color: #e6ecf0;
   color: #333;
-  margin: 33px;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 20px;
+  overflow-y: scroll;
+  padding: 0;
 }
 
 p, ol, ul, td {
@@ -50,6 +51,10 @@ div {
   color: green;
 }
 
+#alert {
+  color: red;
+}
+
 .field_with_errors {
   padding: 2px;
   background-color: red;
@@ -57,7 +62,6 @@ div {
 }
 
 #error_explanation {
-  width: 450px;
   border: 2px solid red;
   padding: 7px 7px 0;
   margin-bottom: 20px;
@@ -82,3 +86,185 @@ div {
 label {
   display: block;
 }
+
+
+// Header
+
+.topbar {
+  backface-visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}
+.global_nav {
+  width: 100%;
+  height: 46px;
+  position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  top: 0;
+  left: 0;
+}
+
+.global-nav-inner {
+  background: #fff;
+  height: 46px;
+}
+
+.container {
+  max-width: 1190px;
+  height: 100%;
+  text-align: center;
+  width: auto;
+  position: relative;
+  margin: 0 auto;
+}
+
+.right-nav {
+  float: right;
+  text-align: left;
+}
+.left-nav {
+  float: left;
+  text-align: left;
+}
+.appname {
+  margin-top: 15px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.appname-link {
+  text-decoration: none;
+}
+
+.appname-link a:hover, a:visited {
+  color: #333;
+  background-color: none;
+}
+
+.right-actions {
+  display: inline-flex;
+  height: 100%;
+}
+.avatar {
+  float:left
+}
+.header-avatar {
+  display: inline-block;
+  margin-top: 2px; 
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+}
+
+.greet {
+  font-size: 13px;
+  margin-top: 15px;
+  align-content: center;
+  margin-left: 3px;
+  font-weight: bold;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
+// End of header
+
+// Main Body
+.main_page_container {
+  position: fixed;
+}
+#page-outer {
+  height: 100%;
+  margin-top: 31px;
+  // position: fixed;
+}
+
+.layout_wrapper {
+  width: 1190px;
+  margin: 0 auto;
+  min-height: 0;
+}
+
+ .AppContent {
+  padding: 10px 14px 15px;
+  position: relative;
+}
+
+.layout-container {
+  margin: 0;
+}
+
+.app-dashboard {
+  float: left;
+  width: 290px;
+}
+
+.main-content {
+  float: left;
+  margin: 0 10px;
+  width: 590px;
+}
+
+// End main body
+
+// Start left nav
+.left_side_bar {
+  margin-top: 16px;
+  border-radius: 5px;
+  background: #f5f8fa;
+}
+.rides-menu-text {
+  font-size: 18px;
+  font-weight: bolder;
+  margin-left: 10px;
+}
+.menu_header {
+  position: relative;
+  padding: 10px;
+  background: white;
+}
+
+._list {
+  width: 100%;
+}
+
+._list_item {
+  display: block;
+  position: relative;
+  padding: .25rem .75rem;
+  line-height: 1.5rem;
+  font-size: .875rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+._list_text {
+  display: block;
+  pointer-events: none;
+}
+
+a:hover, :visited {
+  color: black;
+  background-color: white;
+}
+

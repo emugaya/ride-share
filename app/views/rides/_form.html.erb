@@ -1,0 +1,37 @@
+<div class='ride-form'>
+  <%= form_with model: ride, data: { 'js-tutorial-form' => true } do |form| %>
+    <span class='offer'>Offer or Request a Ride</span>
+    <div id='ride_error'>
+      <%= render 'rides_errors', ride: ride %>
+    </div>
+    <div class="field">
+      <%= form.label 'From:' %>
+      <%= form.text_field :from_location %>
+    </div>
+
+    <div class="field">
+      <%= form.label 'To:' %>
+      <%= form.text_field :destination %>
+    </div>
+
+    <div class="field">
+      <%= form.label 'Number of Seats:' %>
+      <div class='number'><%= form.number_field :seats %></div>
+    </div>
+
+    <div class="field">
+      <%= form.label 'Type:' %>
+      <div><%= form.select :ride_type, ['Offer', 'Request'] %></div>
+    </div>
+
+    <div class="field">
+      <%= form.label 'On Date and Time:' %>
+      <%= form.datetime_select :time %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit 'Create' %>
+    </div>
+  <% end %>
+
+</div>

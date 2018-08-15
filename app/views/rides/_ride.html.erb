@@ -1,0 +1,41 @@
+<li class='ride-item'>
+  <div class='ride'>
+    <div class='content'>
+      <img class='ride-item-avatar ride-avatar' src=<%= ride.user.image_url %>>
+      <span class='bold-font'> <%= ride.user.first_name%></span> is <%= ride_type_request(ride.ride_type)%> a ride from <span class='bold-font'><%= ride.from_location %></span>
+      to <span class='bold-font'><%= ride.destination %></span> on <span class='bold-font'><%= local_time(ride.time) %></span>
+      <div class='ride-item-footer'>
+        <span class='bold-font'>Number of Seats Offered: <%= ride.seats%> </span>
+        <br>
+        <span class='bold-font'>Number of Available Seats: <%= ride.seats - ride.ride_matches.count %> </span>
+        <br>
+        <% if ride.ride_matches.count > 0 %>
+          <%if ride.ride_type == 'Offer'%>
+            <span class='bold-font'>Ride Taken By: </span>
+            <%= ride_taken_by(ride.ride_matches)%>
+          <%else%>
+            <span class='bold-font'>Ride Offered By: </span>
+            <%= ride_taken_by(ride.ride_matches)%>
+          <%end%>
+        <% end %>
+        <br>
+        <div class='ride-action'>
+          <% if is_ride_owner(ride)%>
+            <%= link_to 'Edit', edit_ride_path(ride) %>
+            <%= link_to 'Delete', ride, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% else %>
+            <% if check_if_user_took_offer(ride)%>
+              <%= link_to 'Withdraw',  withdraw_from_offer_rides_path(ride), method: :post %>
+            <%else%>
+              <% if ride.ride_type == 'Request'%>
+                <%= link_to 'Offer Ride',  take_offer_rides_path(ride), method: :post %>
+              <% else %>
+                <%= link_to 'Take Ride',  take_offer_rides_path(ride), method: :post %>
+              <% end %>
+              <%end%>
+          <% end%>
+        </div> 
+      </div>
+    </div>
+  </div>
+</li>

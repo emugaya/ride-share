@@ -1,0 +1,26 @@
+<div class='global_nav'>
+    <div class='global-nav-inner'>
+    <div class='container'>
+    <div class='left-nav'>
+        <div class='appname'>
+        <a class='appname-link'href='/'>RideShare</a>
+        </div>
+    </div>
+        <div class='right-nav'>
+        <div class='right-actions'>
+            <div class='dropdown'>
+            <div class=avatar>
+                <img class='header-avatar'src=<%= @user.image_url %> >
+            </div>
+            <div class='dropdown-content'>
+                <a href='/sign_out', method: :get) %>Sign Out</a>
+            </div>
+            </div>
+            <div class='greet'>
+            Hi <%= @user.first_name %>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>

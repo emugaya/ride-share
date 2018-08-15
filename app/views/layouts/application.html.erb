@@ -9,9 +9,45 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+  <body class='layout-container'>
+    <div class='topbar'>
+      <%= render 'nav'%>
+    </div>
+    <div id='page-outer'>
+      <div id='page-container' class='AppContent layout_wrapper'>
+        <div class='app-dashboard left_side_bar'>
+          <div class='menu_header'>
+            <span class='rides-menu-text'>Rides Menu<span>
+          </div>
+          <div class='_list'>
+            <a href='/rides/current_ride_offers' class='_list_item'>
+              <span class='_list_text'>Current Ride Offers</span>
+            </a>
+            <a href='/rides/current_ride_requests' class='_list_item'>
+              <span class='_list_text'>Current Ride Requests</span>
+            </a>
+            <a href='/rides/my_ride_offers' class='_list_item'>
+              <span class='_list_text'>My Ride Offers</span>
+            </a>
+            <a href='/rides/my_ride_requests' class='_list_item'>
+              <span class='_list_text'>My Ride Requests</span>
+            </a>
+            <a href='/rides/my_received_ride_offers' class='_list_item'>
+              <span class='_list_text'>Ride Offers Received by Me</span>
+            </a>
+            <a href='/rides/my_fullfiled_ride_requests' class='_list_item'>
+              <span class='_list_text'>Ride Requests Fullfilled by Me</span>
+            </a>
+          </div>
+        </div>
+        <div class='main-content'>
+          <%= yield %>
+        </div>
+        <div class='app-dashboard'>
+          <%= render 'form', ride: @ride %>
+        </div>
+      <div>
+    </div>
+    </div>
   </body>
 </html>

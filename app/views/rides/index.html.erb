@@ -1,0 +1,15 @@
+<div class='ride_page_header'>
+  <h2><%= @page_header %></h2>
+</div>
+<p id="notice"><%= notice %></p>
+<p id="alert"><%= flash.alert %></p>
+
+<div class='rides'>
+  <div class='rides-container'>
+      <ul id='rides'>
+        <% @rides.each do |ride| %>
+          <%= render 'ride', ride: ride %>
+        <% end %>
+      </ul>
+  </div>
+</div>

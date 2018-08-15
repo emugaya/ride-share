@@ -10,7 +10,22 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
+// require rails-ujs
 //= require activestorage
-//= require turbolinks
+// require turbolinks
+//= require jquery3
+//= require jquery_ujs
 //= require_tree .
+
+$(document).ready(function() {
+  // Handle succesful form creation
+  $('[data-js-tutorial-form]').on("ajax:success", function(event, data, status, xhr){
+    if (xhr.responseText.indexOf('blank') != -1) {
+      $('#alert').append('An error occurred while creating Ride');
+      $('#ride_error').append(xhr.responseText)
+    } else {
+      $('#rides').append(xhr.responseText);
+      $('#notice').append('Ride succesfully created Success####');
+    }
+  });
+});
