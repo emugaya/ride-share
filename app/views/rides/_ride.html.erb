@@ -24,13 +24,13 @@
             <%= link_to 'Edit', edit_ride_path(ride) %>
             <%= link_to 'Delete', ride, method: :delete, data: { confirm: 'Are you sure?' } %>
           <% else %>
-            <% if check_if_user_took_offer(ride)%>
-              <%= link_to 'Withdraw',  withdraw_from_offer_rides_path(ride), method: :post %>
+            <% if user_ride_match(ride) %>
+              <%= link_to 'Withdraw', ride_ride_match_url(ride, user_ride_match(ride)), method: :delete %>
             <%else%>
               <% if ride.ride_type == 'Request'%>
-                <%= link_to 'Offer Ride',  take_offer_rides_path(ride), method: :post %>
+                <%= link_to 'Offer Ride',  ride_ride_matches_path(ride), method: :post %>
               <% else %>
-                <%= link_to 'Take Ride',  take_offer_rides_path(ride), method: :post %>
+                <%= link_to 'Take Ride',  ride_ride_matches_path(ride), method: :post %>
               <% end %>
               <%end%>
           <% end%>

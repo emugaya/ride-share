@@ -1,105 +1,39 @@
-# require_relative '../models/ride_match'
 class RidesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_ride, only: [:show, :edit, :update, :destroy, :take_offer, :withdraw_from_offer]
+  before_action :set_ride, only: [:show, :edit, :update, :destroy]
 
 
   # GET /rides
   # GET /rides.json
   def index
-    @page_header = 'All Current Ride Offers and Requests'
     @ride = Ride.new
-    @rides = Ride.where('time > ?', Time.now)
-  end
-
-  # GET /rides/1
-  # GET /rides/1.json
-  def show
-  end
-
-  # GET /rides/my_ride_offers
-  def my_ride_offers
-    @page_header = 'My Ride Offers'
-    @ride = Ride.new
-    @rides = Ride.where(user_id: current_user.id, ride_type: 'Offer')
-    render 'index'
-  end
-
-  # GET /rides/my_ride_requests
-  def my_ride_requests
-    @page_header = 'My Ride Requests'
-    @ride = Ride.new
-    @rides = Ride.where(user_id: current_user.id, ride_type: 'Request')
-    render 'index'
-  end
-
-  # GET /rides/my_received_ride_offers
-  def my_received_ride_offers
-    @page_header = 'Ride Offers Received by Me'
-    @ride = Ride.new
-    my_ride_matches = current_user.ride_matches
-    @rides = []
-    my_ride_matches.each do |match|
-      if match.ride.ride_type == 'Offer'
-        @rides.push(match.ride) 
-      end
+    case params[:ride_type]
+      when 'Offers'
+        @page_header = 'Current Ride Offers'
+        @rides = Ride.where('ride_type = ? AND time > ?', 'Offer', Time.now)
+      when 'Requests'
+        @page_header = 'Current Ride Offers'
+        @rides = Ride.where('ride_type = ? AND time > ?', 'Request', Time.now)
+      when 'MyRequests'
+        @page_header = 'My Ride Requests'
+        @rides = Ride.where(user_id: current_user.id, ride_type: 'Request')
+      when 'MyRideOffers'
+        @page_header = 'My Ride Offers'
+        @rides = Ride.where(user_id: current_user.id, ride_type: 'Offer')
+      when 'MyRecievedRides'
+        @page_header = 'Ride Offers Received by Me'
+        @rides = RideMatch.user_rides(current_user,'Offer')
+      when 'RidesFullfilledByMe'
+        @page_header = 'Ride Requests Fullfilled by Me'
+        @rides = RideMatch.user_rides(current_user, 'Request')
+      else
+        @page_header = 'All Current Ride Offers and Requests'
+        @rides = Ride.where('time > ?', Time.now)
     end
-
-    render 'index'
-  end
-
-  # GET /rides/my_fullfiled_ride_requests
-  def my_fullfiled_ride_requests
-    @page_header = 'Ride Requests Fullfilled by Me'
-    @ride = Ride.new
-    my_ride_matches = current_user.ride_matches
-    @rides = []
-    my_ride_matches.each do |match|
-      if match.ride.ride_type == 'Request'
-        @rides.push(match.ride) 
-      end
-    end
-
-    render 'index'
-  end
-
-  # GET All Current ride offers
-  # GET /rides/current_ride_offers
-  def current_ride_offers
-    @page_header = 'Current Ride Offers'
-    @ride = Ride.new
-    @rides = Ride.where('ride_type = ? AND time > ?', 'Offer', Time.now)
-    render 'index'
-  end
-
-  # GET All Current ride requests
-  # GET /rides/current_ride_requests
-  def current_ride_requests
-    @page_header = 'Current Ride Requests'
-    @ride = Ride.new
-    @rides = Ride.where('ride_type = ? AND time > ?', 'Request', Time.now)
-    render 'index'
-  end
-
-  # POST /rides/take_offer
-  def take_offer
-    @ride.ride_matches.create(user_id: current_user.id)
-    redirect_to rides_url
-  end
-
-  # DELETE /rides/withdraw_from_offer
-  def withdraw_from_offer
-    @ride_match = RideMatch.find_by(ride_id: @ride.id, user_id: current_user.id).destroy
-    redirect_to rides_url
-  end
-
-  # GET /rides/new
-  def new
-    @ride = Ride.new
   end
 
   # GET /rides/1/edit
   def edit
+    render layout: 'edit'
   end
 
   # POST /rides
@@ -118,7 +52,7 @@ class RidesController < ApplicationController
   def update
     respond_to do |format|
       if @ride.update(ride_params)
-        format.html { redirect_to @ride, notice: 'Ride was successfully updated.' }
+        format.html { redirect_to root_path, notice: "Ride with id #{@ride.id} was successfully updated." }
         format.json { render :show, status: :ok, location: @ride }
       else
         format.html { render :edit }

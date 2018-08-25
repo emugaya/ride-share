@@ -1,13 +1,6 @@
 Rails.application.routes.draw do
   resources :rides do
-    get 'my_ride_offers', on: :collection 
-    get 'my_ride_requests', on: :collection 
-    get 'my_received_ride_offers', on: :collection 
-    get 'my_fullfiled_ride_requests', on: :collection 
-    get 'current_ride_offers', on: :collection 
-    get 'current_ride_requests', on: :collection 
-    post '/:id/take_offer', :to => 'rides#take_offer', as: :take_offer, on: :collection
-    post '/:id/withdraw_from_offer', :to => 'rides#withdraw_from_offer', as: :withdraw_from_offer, on: :collection
+    resources :ride_matches, only: [:create, :destroy]
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

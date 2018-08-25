@@ -1,9 +1,9 @@
 class Ride < ApplicationRecord
   belongs_to :user
-  has_many :users, through: :ride_matches
   has_many :ride_matches, dependent: :destroy
 
   validates :from_location, presence: true
+  validates :user_id, presence: true
   validates :destination, presence: true
   validates :time, presence: true
   validates :seats, presence: true
@@ -20,5 +20,9 @@ class Ride < ApplicationRecord
     if seats.present? && seats < 1
       errors.add(:seats, "can't be less than one('1')")
     end
+  end
+
+  def user_ride_match(user_id)
+    RideMatch.where(ride_id: id, user_id: user_id)
   end
 end

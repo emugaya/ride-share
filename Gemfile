@@ -60,17 +60,28 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 5.0'
-  gem 'rspec-rails', '~> 3.7'
 end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'rspec-rails', '~> 3.7'
   gem 'capybara', '>= 2.15', '< 4.0'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+  #RSpec Rails
+  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-mocks'
+  gem 'rspec-simplecov'
+  gem 'simplecov'
+  # Shoulda matchers
+  gem 'shoulda-matchers', '~> 3.1'
+
+  # Rails Controller Testing gem
+  gem 'rails-controller-testing'
+  # Factory Bot
+  gem 'factory_bot', '~> 4.0', :require => false
+  # Database Cleaner
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

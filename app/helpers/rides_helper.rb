@@ -8,11 +8,7 @@ module RidesHelper
   end
 
   def is_ride_owner(ride)
-    if ride.user_id == current_user.id
-      is_ride_owner = true
-    else
-      is_ride_owner = false
-    end
+    ride.user_id == current_user.id ? true : false
   end
 
   def ride_taken_by(ride_matches)
@@ -28,18 +24,10 @@ module RidesHelper
   end
 
   # Check if the user has already taken the offer.
-  def check_if_user_took_offer(ride)
-    matched_users = []
-    if ride.ride_matches
-      ride.ride_matches.each { |match| matched_users.push(match.user_id) }
-      puts '********************'
-      puts "#{matched_users.to_json} ......"
-      puts 
-      puts '********************'
-      matched_users.include?(current_user.id) ? true : false
+  def user_ride_match(ride)
+    if ride.user_ride_match(current_user.id)
+      ride.user_ride_match(current_user.id)[0]
     else
-      puts 'else*********'
-      puts ride.ride_matches
       false
     end
   end

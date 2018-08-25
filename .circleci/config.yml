@@ -60,22 +60,22 @@ jobs:
             - cc-test-reporter
       # Run tests
       # run tests!
-      # - run:
-      #     name: Run tests
-      #     command: |
-      #       rake db:migrate --trace
-      #       bundle exec rspec -f d
-      #       ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.backend.json coverage/.resultset.json
-      # # collect reports
-      # - persist_to_workspace:
-      #     root: tmp
-      #     paths:
-      #       - codeclimate.backend.json
-      # - attach_workspace:
-      #     at: ~/repo/tmp
+      - run:
+          name: Run tests
+          command: |
+            rake db:migrate --trace
+            bundle exec rspec -f d
+            ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.backend.json coverage/.resultset.json
+      # collect reports
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - codeclimate.backend.json
+      - attach_workspace:
+          at: ~/repo/tmp
       # Upload Coverage results to Code Climate
-      # - run:
-      #     name: Upload coverage results to Code Climate
-      #     command: |
-      #       ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 1 -o tmp/codeclimate.total.json
-      #       ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 1 -o tmp/codeclimate.total.json
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
