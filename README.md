@@ -1,3 +1,6 @@
+
+[![CircleCI](https://circleci.com/gh/emugaya/ride-share/tree/develop.svg?style=svg)](https://circleci.com/gh/emugaya/ride-share/tree/develop)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/089984407c40f304bf9f/test_coverage)](https://codeclimate.com/github/emugaya/ride-share/test_coverage)
 # RideShare
 RideShare is web application that allows Andelans to offer or request a ride to some destination they are going to.
 

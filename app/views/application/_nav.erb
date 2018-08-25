@@ -10,14 +10,14 @@
         <div class='right-actions'>
             <div class='dropdown'>
             <div class=avatar>
-                <img class='header-avatar'src=<%= @user.image_url %> >
+                <img class='header-avatar'src=<%= current_user.image_url %> >
             </div>
             <div class='dropdown-content'>
                 <a href='/sign_out', method: :get) %>Sign Out</a>
             </div>
             </div>
             <div class='greet'>
-            Hi <%= @user.first_name %>
+            Hi <%= current_user.first_name %>
             </div>
         </div>
         </div>
