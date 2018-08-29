@@ -1,33 +1,32 @@
 class RidesController < ApplicationController
-  before_action :set_ride, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_ride, only: %i[show edit update destroy]
 
   # GET /rides
   # GET /rides.json
   def index
     @ride = Ride.new
     case params[:ride_type]
-      when 'Offers'
-        @page_header = 'Current Ride Offers'
-        @rides = Ride.where('ride_type = ? AND time > ?', 'Offer', Time.now)
-      when 'Requests'
-        @page_header = 'Current Ride Offers'
-        @rides = Ride.where('ride_type = ? AND time > ?', 'Request', Time.now)
-      when 'MyRequests'
-        @page_header = 'My Ride Requests'
-        @rides = Ride.where(user_id: current_user.id, ride_type: 'Request')
-      when 'MyRideOffers'
-        @page_header = 'My Ride Offers'
-        @rides = Ride.where(user_id: current_user.id, ride_type: 'Offer')
-      when 'MyRecievedRides'
-        @page_header = 'Ride Offers Received by Me'
-        @rides = RideMatch.user_rides(current_user,'Offer')
-      when 'RidesFullfilledByMe'
-        @page_header = 'Ride Requests Fullfilled by Me'
-        @rides = RideMatch.user_rides(current_user, 'Request')
-      else
-        @page_header = 'All Current Ride Offers and Requests'
-        @rides = Ride.where('time > ?', Time.now)
+    when 'Offers'
+      @page_header = 'Current Ride Offers'
+      @rides = Ride.available_rides.offers
+    when 'Requests'
+      @page_header = 'Current Ride Requests'
+      @rides = Ride.available_rides.requests
+    when 'MyRequests'
+      @page_header = 'My Ride Requests'
+      @rides = Ride.requests.where(user: current_user)
+    when 'MyRideOffers'
+      @page_header = 'My Ride Offers'
+      @rides = Ride.offers.where(user: current_user)
+    when 'MyRecievedRides'
+      @page_header = 'Ride Offers Received by Me'
+      @rides = current_user.subscribed_rides.offers
+    when 'RidesFullfilledByMe'
+      @page_header = 'Ride Requests Fullfilled by Me'
+      @rides = current_user.subscribed_rides.requests
+    else
+      @page_header = 'All Current Ride Offers and Requests'
+      @rides = Ride.available_rides
     end
   end
 
@@ -43,7 +42,7 @@ class RidesController < ApplicationController
     if @ride.save
       render partial: 'ride', locals: { ride: @ride }
     else
-      render partial: 'rides_errors', locals: { ride: @ride} 
+      render partial: 'rides_errors', locals: { ride: @ride }
     end
   end
 
@@ -52,10 +51,11 @@ class RidesController < ApplicationController
   def update
     respond_to do |format|
       if @ride.update(ride_params)
-        format.html { redirect_to root_path, notice: "Ride with id #{@ride.id} was successfully updated." }
+        notice_msg = "Ride with id #{@ride.id} was successfully updated."
+        format.html { redirect_to root_path, notice: notice_msg }
         format.json { render :show, status: :ok, location: @ride }
       else
-        format.html { render :edit }
+        format.html { render :edit, layout: 'edit' }
         format.json { render json: @ride.errors, status: :unprocessable_entity }
       end
     end
@@ -66,19 +66,30 @@ class RidesController < ApplicationController
   def destroy
     @ride.destroy
     respond_to do |format|
-      format.html { redirect_to rides_url, notice: 'Ride was successfully destroyed.' }
+      notice_msg = 'Ride was successfully destroyed.'
+      format.html { redirect_to rides_url, notice: notice_msg }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ride
-      @ride = Ride.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ride_params
-      params.require(:ride).permit(:time, :ride_type, :from_location, :destination, :info, :seats, :status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ride
+    @ride = Ride.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the whitelist 
+  # through.
+  def ride_params
+    params.require(:ride).permit(
+      :time,
+      :ride_type,
+      :from_location,
+      :destination,
+      :info,
+      :seats,
+      :status
+    )
+  end
 end

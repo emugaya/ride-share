@@ -2,13 +2,13 @@
 
 RSpec.shared_examples 'an invalid model' do |model, model_object|
   it "validation of #{model} model fails when input is invalid" do
-    expect(FactoryBot.build(model_object)).to be_invalid 
+    expect(FactoryBot.build(model_object)).to be_invalid
   end
 end
 
 RSpec.shared_examples 'a valid model' do |model, model_object|
   it "validation of #{model} model succeeds when input is valid" do
-    expect(FactoryBot.build(model_object)).to be_valid 
+    expect(FactoryBot.build(model_object)).to be_valid
   end
 end
 
@@ -23,11 +23,12 @@ RSpec.shared_examples 'items belonging to object' do |model, related_child_model
     model_item = model.first
 
     if related_child_model == 'users'
-      expect(model_item.user).to eq(FactoryBot.build(:user))
+      expect(model_item.user).to eq(User.first)
     elsif related_child_model == 'rides'
       expect(model_item.rides.length).to be(1)
     elsif related_child_model == 'ride_matches'
-      expect(model_item.ride_matches.length).to be(1) 
+      model_item = model.second if model_item.class == User
+      expect(model_item.ride_matches.length).to be(1)
     end
   end
 end

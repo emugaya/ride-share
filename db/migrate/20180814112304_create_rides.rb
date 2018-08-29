@@ -6,7 +6,7 @@ class CreateRides < ActiveRecord::Migration[5.2]
       t.string :from_location
       t.string :destination
       t.integer :seats
-      t.belongs_to :user, index: true, type: :string
+      t.belongs_to :user, index: true
 
       t.timestamps
     end

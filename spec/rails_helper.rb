@@ -10,9 +10,10 @@ ENV['RAILS_ENV'] ||= 'test'
 SimpleCov.start do
   add_filter 'spec'
   add_filter 'config'
-  add_group 'Models', 'app/models'
-  add_group 'Helpers', 'app/helpers'
   add_group 'Controllers', 'app/controllers'
+  add_group 'Helpers', 'app/helpers'
+  add_group 'Mailers', 'app/mailers'
+  add_group 'Models', 'app/models'
 end
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production

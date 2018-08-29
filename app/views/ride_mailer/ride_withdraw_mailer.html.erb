@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hi <%@ride_owner.first_name %></p>
+    <p>
+      <%= @ride_match.first_name %> has withdrawn interest in your ride <%= @ride.ride_type%>
+    </p>
+    <p>Ride Details</p>
+    <p>Ride ID: <%= @ride.id %></p>
+    <p>From: <%= @ride.from_location %></p>
+    <p>To: <%= @ride.destination %></p>
+    <p>Time: <%= localize(@ride.time) %></p>
+
+    <p>Thanks for using RideShare have a great day!</p>
+  </body>
+</html>

@@ -12,20 +12,20 @@
         <% if ride.ride_matches.count > 0 %>
           <%if ride.ride_type == 'Offer'%>
             <span class='bold-font'>Ride Taken By: </span>
-            <%= ride_taken_by(ride.ride_matches)%>
+            <%= ride_taken_by(ride)%>
           <%else%>
             <span class='bold-font'>Ride Offered By: </span>
-            <%= ride_taken_by(ride.ride_matches)%>
+            <%= ride_taken_by(ride)%>
           <%end%>
         <% end %>
         <br>
         <div class='ride-action'>
-          <% if is_ride_owner(ride)%>
+          <% if ride_owner(ride)%>
             <%= link_to 'Edit', edit_ride_path(ride) %>
             <%= link_to 'Delete', ride, method: :delete, data: { confirm: 'Are you sure?' } %>
           <% else %>
             <% if user_ride_match(ride) %>
-              <%= link_to 'Withdraw', ride_ride_match_url(ride, user_ride_match(ride)), method: :delete %>
+              <%= link_to 'Withdraw', ride_ride_match_url(ride, ride_match(ride)), method: :delete %>
             <%else%>
               <% if ride.ride_type == 'Request'%>
                 <%= link_to 'Offer Ride',  ride_ride_matches_path(ride), method: :post %>

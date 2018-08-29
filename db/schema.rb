@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2018_08_17_090824) do
 
   create_table "ride_matches", force: :cascade do |t|
     t.bigint "ride_id"
-    t.string "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ride_id"], name: "index_ride_matches_on_ride_id"
@@ -30,16 +30,19 @@ ActiveRecord::Schema.define(version: 2018_08_17_090824) do
     t.string "from_location"
     t.string "destination"
     t.integer "seats"
-    t.string "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_rides_on_user_id"
   end
 
-  create_table "users", id: :string, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
+    t.string "uuid"
     t.string "first_name"
     t.string "email"
     t.string "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
