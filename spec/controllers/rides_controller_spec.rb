@@ -35,7 +35,7 @@ RSpec.describe RidesController, type: :controller do
   end
 
   describe 'PATCH/PUT #update' do
-    before :each {@ride = Ride.first}
+    before :each { @ride = Ride.first }
 
     context 'when updating ride' do
       it 'succesfully updates ride' do
@@ -55,7 +55,7 @@ RSpec.describe RidesController, type: :controller do
   end
 
   describe 'DELETE #destroy ride' do
-    before :each {@ride = Ride.first}
+    before :each { @ride = Ride.first }
     it 'deletes a ride' do
       sign_in user
       expect{

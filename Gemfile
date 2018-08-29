@@ -72,6 +72,7 @@ group :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'rspec-mocks'
   gem 'rspec-simplecov'
+  gem 'rubocop-rspec'
   gem 'simplecov'
   # Shoulda matchers
   gem 'shoulda-matchers', '~> 3.1'

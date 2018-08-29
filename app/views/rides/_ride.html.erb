@@ -20,7 +20,7 @@
         <% end %>
         <br>
         <div class='ride-action'>
-          <% if is_ride_owner(ride)%>
+          <% if ride_owner(ride)%>
             <%= link_to 'Edit', edit_ride_path(ride) %>
             <%= link_to 'Delete', ride, method: :delete, data: { confirm: 'Are you sure?' } %>
           <% else %>

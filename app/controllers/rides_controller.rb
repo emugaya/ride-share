@@ -1,33 +1,32 @@
 class RidesController < ApplicationController
-  before_action :set_ride, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_ride, only: %i[show edit update destroy]
 
   # GET /rides
   # GET /rides.json
   def index
     @ride = Ride.new
     case params[:ride_type]
-      when 'Offers'
-        @page_header = 'Current Ride Offers'
-        @rides = Ride.where('ride_type = ? AND time > ?', 'Offer', Time.now)
-      when 'Requests'
-        @page_header = 'Current Ride Offers'
-        @rides = Ride.where('ride_type = ? AND time > ?', 'Request', Time.now)
-      when 'MyRequests'
-        @page_header = 'My Ride Requests'
-        @rides = Ride.where(user_id: current_user.id, ride_type: 'Request')
-      when 'MyRideOffers'
-        @page_header = 'My Ride Offers'
-        @rides = Ride.where(user_id: current_user.id, ride_type: 'Offer')
-      when 'MyRecievedRides'
-        @page_header = 'Ride Offers Received by Me'
-        @rides = RideMatch.user_rides(current_user,'Offer')
-      when 'RidesFullfilledByMe'
-        @page_header = 'Ride Requests Fullfilled by Me'
-        @rides = RideMatch.user_rides(current_user, 'Request')
-      else
-        @page_header = 'All Current Ride Offers and Requests'
-        @rides = Ride.where('time > ?', Time.now)
+    when 'Offers'
+      @page_header = 'Current Ride Offers'
+      @rides = Ride.where('ride_type = ? AND time > ?', 'Offer', Time.now)
+    when 'Requests'
+      @page_header = 'Current Ride Offers'
+      @rides = Ride.where('ride_type = ? AND time > ?', 'Request', Time.now)
+    when 'MyRequests'
+      @page_header = 'My Ride Requests'
+      @rides = Ride.where(user_id: current_user.id, ride_type: 'Request')
+    when 'MyRideOffers'
+      @page_header = 'My Ride Offers'
+      @rides = Ride.where(user_id: current_user.id, ride_type: 'Offer')
+    when 'MyRecievedRides'
+      @page_header = 'Ride Offers Received by Me'
+      @rides = RideMatch.user_rides(current_user,'Offer')
+    when 'RidesFullfilledByMe'
+      @page_header = 'Ride Requests Fullfilled by Me'
+      @rides = RideMatch.user_rides(current_user, 'Request')
+    else
+      @page_header = 'All Current Ride Offers and Requests'
+      @rides = Ride.where('time > ?', Time.now)
     end
   end
 
@@ -43,7 +42,7 @@ class RidesController < ApplicationController
     if @ride.save
       render partial: 'ride', locals: { ride: @ride }
     else
-      render partial: 'rides_errors', locals: { ride: @ride} 
+      render partial: 'rides_errors', locals: { ride: @ride }
     end
   end
 
@@ -72,13 +71,14 @@ class RidesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ride
-      @ride = Ride.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ride_params
-      params.require(:ride).permit(:time, :ride_type, :from_location, :destination, :info, :seats, :status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ride
+    @ride = Ride.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def ride_params
+    params.require(:ride).permit(:time, :ride_type, :from_location, :destination, :info, :seats, :status)
+  end
 end
